@@ -10,7 +10,7 @@ import { LoginUrl, SendOtp } from "../../API"; // Adjust path if needed
 import axios from "axios";
 import OtpPopup from "./OtpVerification"; // Adjust path if needed
 import ForgotPasswordPopup from "./ForgotPasswordPopup"; // Adjust path if needed
-
+import { Button } from "../components/core/Button";
 function LoginPage({ setUser }) {
   const [formData, setFormData] = useState({
     email: "",
@@ -150,7 +150,7 @@ function LoginPage({ setUser }) {
 
       {/* Form Section */}
       <motion.div
-        className="flex items-center justify-center w-full lg:w-1/2 lg:bg-[#2418ff] bg-gray-100 p-4"
+        className="flex items-center justify-center w-full lg:w-1/2 lg:bg-[#ed8936] bg-gray-100 p-4"
         initial={{ opacity: 0, x: 200 }}
         animate={{ opacity: 1, x: 0, transition: { duration: 0.8 } }}
       >
@@ -215,7 +215,7 @@ function LoginPage({ setUser }) {
           </div>
 
           {/* Submit Button (Email/Password Login) */}
-          <button
+          <Button
             type="submit" // Triggers handleSubmit
             className="w-full bg-[#2418ff] text-white py-2.5 px-4 rounded-lg hover:bg-[#231bcd] transition duration-200 disabled:opacity-60 mb-3"
             disabled={
@@ -230,7 +230,7 @@ function LoginPage({ setUser }) {
             ) : (
               "Login"
             )}
-          </button>
+          </Button>
 
           {/* OR Separator */}
           <div className="flex items-center my-4">
@@ -240,8 +240,9 @@ function LoginPage({ setUser }) {
           </div>
 
           {/* Button: Login via OTP */}
-          <button
-            type="button" // Important: type="button" prevents form submission
+          <Button
+            type="button" 
+            variant="secondary" 
             onClick={handleSendOtp} // Triggers OTP sending process
             className="w-full bg-gray-200 text-gray-800 py-2.5 px-4 rounded-lg hover:bg-gray-300 transition duration-200 disabled:opacity-60 mb-4"
             disabled={otpSending || !formData.email || loading} // Disable if sending OTP, missing email, or logging in
@@ -254,14 +255,14 @@ function LoginPage({ setUser }) {
             ) : (
               "Login with OTP"
             )}
-          </button>
+          </Button>
 
           {/* Links */}
           <div className="text-center mt-2">
             Don't have an account?&nbsp;
             <Link
               to="/register" // Ensure you have a route for /register
-              className="text-[#2418ff] hover:underline font-medium"
+              className="text-[#ed8936] hover:underline font-medium"
             >
               Create Account
             </Link>
@@ -270,7 +271,7 @@ function LoginPage({ setUser }) {
             <button
               type="button"
               onClick={handleOpenForgotPassword}
-              className="text-sm text-gray-600 hover:text-[#2418ff] hover:underline focus:outline-none"
+              className="text-sm text-gray-600 hover:text-[#ed8936] hover:underline focus:outline-none"
             >
               Forgot Password?
             </button>

@@ -1,221 +1,161 @@
-import React, { useState } from "react";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  IconButton,
-  Typography,
-  Menu,
-  Container,
-  Avatar,
-  Button,
-  Tooltip,
-  MenuItem,
-} from "@mui/material";
-import { Link as RouterLink } from "react-router-dom"; // Use alias to avoid clash with MUI Link
-import MenuIcon from "@mui/icons-material/Menu";
-import FastfoodIcon from "@mui/icons-material/Fastfood"; // Example App Icon
-import HomeIcon from "@mui/icons-material/Home";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import SettingsIcon from "@mui/icons-material/Settings";
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { ChefHat, Menu, X, Home, Heart, Settings, LogOut } from "lucide-react"
 
 // Define navigation pages
 const pages = [
-  { name: "Home", path: "/home", icon: <HomeIcon fontSize="small" /> },
-  { name: "Recipe", path: "/recipe", icon: <FastfoodIcon fontSize="small" /> },
-  { name: "Favorites", path: "/fav", icon: <FavoriteIcon fontSize="small" /> },
-  // Settings might be better placed in the user menu, but including here as per original drawer
-  // { name: 'Settings', path: '/settings', icon: <SettingsIcon fontSize="small" /> },
-];
-
-// User-specific settings in the dropdown
-const settings = ["Settings", "Logout"];
+  { name: "Home", path: "/home", icon: Home },
+  { name: "Recipe", path: "/recipe", icon: ChefHat },
+  { name: "Favorites", path: "/fav", icon: Heart },
+]
 
 function Navbar({ user, logout }) {
-  // Accept user and logout props
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
+  const navigate = useNavigate()
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  const toggleUserMenu = () => {
+    setIsUserMenuOpen(!isUserMenuOpen)
+  }
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
-  const handleUserMenuClick = (setting) => {
-    handleCloseUserMenu(); // Close menu first
-    if (setting === "Logout") {
-      logout(); // Call the logout function passed as prop
+  const handleUserMenuClick = (action) => {
+    setIsUserMenuOpen(false)
+    if (action === "logout") {
+      logout()
+    } else if (action === "settings") {
+      navigate("/settings")
     }
-    // If 'Settings', navigation will be handled by the RouterLink component
-  };
+  }
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false)
+  }
+
+  // Get user initials for avatar
+  const getUserInitials = () => {
+    if (user?.name) {
+      return user.name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
+    }
+    return user?.username?.slice(0, 2).toUpperCase() || "U"
+  }
 
   return (
-    <AppBar
-      position="fixed"
-      sx={{ bgcolor: "#f8f8ff", color: "#333", marginBottom: 20 }}
-    >
-      {" "}
-      {/* Fixed position */}
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          {/* --- Logo/Title (Visible on all screens) --- */}
-          <FastfoodIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component={RouterLink}
-            to="/home"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".1rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Recipe AI
-          </Typography>
+    <nav className="fixed top-0 left-0 right-0 bg-white shadow-md z-50 border-b border-gray-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link to="/home" className="flex items-center space-x-2 text-gray-800 hover:text-gray-600 transition-colors">
+            <ChefHat className="h-8 w-8 text-orange-500" />
+            <span className="text-xl font-bold hidden sm:block">Recipe AI</span>
+          </Link>
 
-          {/* --- Mobile Menu --- */}
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar-nav"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar-nav"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {pages.map((page) => {
+              const IconComponent = page.icon
+              return (
+                <Link
                   key={page.name}
-                  onClick={handleCloseNavMenu}
-                  component={RouterLink} // Use RouterLink for navigation
                   to={page.path}
+                  className="flex items-center space-x-1 text-gray-700 hover:text-orange-500 transition-colors font-medium"
                 >
-                  <Typography textAlign="center">{page.name}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+                  <IconComponent className="h-4 w-4" />
+                  <span>{page.name}</span>
+                </Link>
+              )
+            })}
+          </div>
 
-          {/* --- Mobile Logo/Title --- */}
-          <FastfoodIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component={RouterLink}
-            to="/home"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".1rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Recipe AI
-          </Typography>
-
-          {/* --- Desktop Links --- */}
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: "none", md: "flex" },
-              justifyContent: "center",
-            }}
-          >
-            {pages.map((page) => (
-              <Button
-                key={page.name}
-                onClick={handleCloseNavMenu} // Close mobile menu if open (optional)
-                component={RouterLink} // Use RouterLink
-                to={page.path}
-                sx={{ my: 2, color: "#333", display: "flex", gap: 0.5, mx: 1 }} // Adjusted color and spacing
-                startIcon={page.icon}
+          {/* User Menu & Mobile Menu Button */}
+          <div className="flex items-center space-x-4">
+            {/* User Avatar & Dropdown */}
+            <div className="relative">
+              <button
+                onClick={toggleUserMenu}
+                className="flex items-center justify-center w-10 h-10 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-colors font-semibold text-sm"
               >
-                {page.name}
-              </Button>
-            ))}
-          </Box>
+                {getUserInitials()}
+              </button>
 
-          {/* --- User Menu (Avatar & Dropdown) --- */}
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar
-                  alt={user?.username || "User"} // Use username or default
-                  // Add src={user?.profilePicture} if you have profile pictures
-                />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar-user"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+              {/* User Dropdown Menu */}
+              {isUserMenuOpen && (
+                <>
+                  {/* Backdrop */}
+                  <div className="fixed inset-0 z-10" onClick={() => setIsUserMenuOpen(false)} />
+                  {/* Dropdown */}
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-20">
+                    <div className="py-1">
+                      <div className="px-4 py-2 text-sm text-gray-500 border-b border-gray-100">
+                        {user?.name || user?.username || "User"}
+                      </div>
+                      <button
+                        onClick={() => handleUserMenuClick("settings")}
+                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                      >
+                        <Settings className="h-4 w-4 mr-2" />
+                        Settings
+                      </button>
+                      <button
+                        onClick={() => handleUserMenuClick("logout")}
+                        className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                      >
+                        <LogOut className="h-4 w-4 mr-2" />
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={toggleMobileMenu}
+              className="md:hidden p-2 text-gray-700 hover:text-orange-500 transition-colors"
             >
-              {settings.map((setting) => (
-                <MenuItem
-                  key={setting}
-                  onClick={() => handleUserMenuClick(setting)}
-                  // Link to settings page only for the 'Settings' option
-                  component={setting === "Settings" ? RouterLink : "div"}
-                  to={setting === "Settings" ? "/settings" : undefined}
-                >
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
-  );
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation Menu */}
+        {isMobileMenuOpen && (
+          <>
+            {/* Backdrop */}
+            <div className="fixed inset-0 bg-black bg-opacity-25 z-10 md:hidden" onClick={closeMobileMenu} />
+            {/* Mobile Menu */}
+            <div className="absolute top-16 left-0 right-0 bg-white shadow-lg border-t border-gray-200 z-20 md:hidden">
+              <div className="py-2">
+                {pages.map((page) => {
+                  const IconComponent = page.icon
+                  return (
+                    <Link
+                      key={page.name}
+                      to={page.path}
+                      onClick={closeMobileMenu}
+                      className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-orange-500 transition-colors"
+                    >
+                      <IconComponent className="h-5 w-5" />
+                      <span className="font-medium">{page.name}</span>
+                    </Link>
+                  )
+                })}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </nav>
+  )
 }
-export default Navbar;
+
+export default Navbar

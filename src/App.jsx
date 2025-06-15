@@ -27,6 +27,7 @@ import {
 } from "../API";
 import axios from "axios";
 import { toast } from "react-toastify";
+import Footer from "./components/Footer";
 
 function AppWrapper() {
   const [user, setUser] = useState(null);
@@ -133,7 +134,6 @@ function AppWrapper() {
       setUser(null);
       localStorage.removeItem("authToken");
       navigate("/login", { replace: true });
-      toast.success("Logout Successful");
     };
 
     if (!token) {
@@ -259,6 +259,7 @@ function AppWrapper() {
           <Route path="*" element={<Navigate to="/login" replace />} />
         )}
       </Routes>
+      <Footer />
     </Box> // End of outermost Box
   );
 }

@@ -8,6 +8,7 @@ import RecipeCard from "../components/RecipeCard";
 import { GetAllRecipe } from "../../API"; // Ensure path is correct
 import axios from "axios";
 import RecipeCardSkeleton from "../components/RecipeCardSkeleton";
+import { Plus, Heart, ChefHat, TrendingUp, Sparkles, BookOpen, Star } from "lucide-react"
 
 const HomeScreen = ({
   recipes = [],
@@ -83,171 +84,197 @@ const HomeScreen = ({
   }, [allRecipes, user]); // Recalculate only when allRecipes or user changes
   // --- End Sort recipes ---
 
+  
+  const stats = [
+    { label: "Your Recipes", value: recipes.length, icon: BookOpen, color: "blue" },
+    { label: "Favorites", value: favorites.length, icon: Heart, color: "red" },
+    { label: "Total Recipes", value: allRecipes.length, icon: ChefHat, color: "orange" },
+  ]
+
   return (
     <motion.div
-      className="p-4 md:p-8 min-h-screen" // Added background for consistency
-      style={{ overflowY: "auto" }}
-      initial={{ y: 0, opacity: 0 }} // Start animation from y:0
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }} // Slightly faster transition
+      className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
     >
-      <div className="max-w-7xl mx-auto">
-        {" "}
-        {/* Increased max-width */}
-        <h1 className="text-3xl md:text-4xl font-bold mb-2 text-slate-800">
-          Welcome back, {user?.name?.split(" ")[0] || "Chef"}!
-        </h1>{" "}
-        {/* Use first name */}
-        <p className="text-lg mb-8 text-slate-600">
-          Let's create something delicious today.
-        </p>
-        {/* Action Buttons Section (remains the same) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-          {/* ... New Recipe Box ... */}
-          {/* ... Favorites Box ... */}
-          <div className="p-4 md:p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
-            {" "}
-            <div
-              className="flex items-center space-x-3 cursor-pointer"
-              onClick={() => navigate("/recipe")}
-            >
-              {" "}
-              <div className="bg-blue-100 p-3 rounded-full">
-                {" "}
-                <Create className="text-blue-600" />{" "}
-              </div>{" "}
-              <div>
-                {" "}
-                <h2 className="text-xl font-semibold">New Recipe</h2>{" "}
-                <p className="text-gray-600">Create from ingredients</p>{" "}
-              </div>{" "}
-            </div>{" "}
-          </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Hero Section */}
+        <div className="text-center mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <div className="flex items-center justify-center mb-4">
+              <Sparkles className="h-8 w-8 text-orange-500 mr-2" />
+              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                Welcome back, {user?.name?.split(" ")[0] || "Chef"}!
+              </h1>
+            </div>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Ready to create something delicious? Let's turn your ingredients into culinary masterpieces.
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Stats Cards */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          {stats.map((stat, index) => {
+            const IconComponent = stat.icon
+            return (
+              <div
+                key={index}
+                className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-300"
+              >
+                <div className="flex items-center">
+                  <div className={`p-3 rounded-lg bg-${stat.color}-100 mr-4`}>
+                    <IconComponent className={`h-6 w-6 text-${stat.color}-600`} />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                    <p className="text-sm text-gray-600">{stat.label}</p>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </motion.div>
+
+        {/* Action Cards */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
           <div
-            className="bg-white p-4 md:p-6 rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-200"
+            className="group bg-gradient-to-r from-orange-500 to-amber-500 rounded-xl p-6 cursor-pointer hover:from-orange-600 hover:to-amber-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            onClick={() => navigate("/recipe")}
+          >
+            <div className="flex items-center space-x-4">
+              <div className="p-3 bg-white/20 rounded-lg group-hover:bg-white/30 transition-colors duration-300">
+                <Plus className="h-8 w-8 text-white" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-white mb-1">Create Recipe</h2>
+                <p className="text-orange-100">Turn your ingredients into magic</p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="group bg-gradient-to-r from-red-500 to-pink-500 rounded-xl p-6 cursor-pointer hover:from-red-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             onClick={() => navigate("/fav")}
           >
-            {" "}
-            <div className="flex items-center space-x-3">
-              {" "}
-              <div className="bg-red-100 p-3 rounded-full">
-                {" "}
-                <Favorite className="text-red-500" />{" "}
-              </div>{" "}
+            <div className="flex items-center space-x-4">
+              <div className="p-3 bg-white/20 rounded-lg group-hover:bg-white/30 transition-colors duration-300">
+                <Heart className="h-8 w-8 text-white" />
+              </div>
               <div>
-                {" "}
-                <h2 className="text-xl font-semibold">Favorites</h2>{" "}
-                <p className="text-gray-600">Your favorite recipes</p>{" "}
-              </div>{" "}
-            </div>{" "}
-          </div>
-        </div>
-        {/* Recent Activity Section (remains the same) */}
-        <div className="bg-white p-4 md:p-6 rounded-t-lg shadow-md mb-0.5">
-          {/* ... Recent Activity content ... */}
-          <h2 className="text-2xl font-semibold mb-4">Recent Activity</h2>{" "}
-          <ul className="space-y-4">
-            {" "}
-            <li className="flex items-center space-x-3">
-              {" "}
-              <div className="bg-blue-100 p-2 rounded-full flex-shrink-0">
-                {" "}
-                <svg
-                  className="w-6 h-6 text-blue-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  {" "}
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 4v16m8-8H4"
-                  ></path>{" "}
-                </svg>{" "}
-              </div>{" "}
-              <div>
-                {" "}
-                <p className="text-gray-800">
-                  {" "}
-                  {recipes.length === 0
-                    ? "No Recipes Created Yet"
-                    : `Created ${
-                        recipes[recipes.length - 1]?.title || "a recipe"
-                      }`}{" "}
-                </p>{" "}
-                {timeAgo && (
-                  <span className="text-sm text-gray-500">{timeAgo}</span>
-                )}{" "}
-              </div>{" "}
-            </li>{" "}
-            <li className="flex items-center space-x-3">
-              {" "}
-              <div className="bg-red-100 p-2 rounded-full flex-shrink-0">
-                {" "}
-                <Favorite sx={{ color: "red" }} />{" "}
-              </div>{" "}
-              <div>
-                {" "}
-                <p className="text-gray-800">
-                  {" "}
-                  {favorites.length === 0
-                    ? "No Recipe Added to Favorites yet"
-                    : `Added ${
-                        favorites[favorites.length - 1]?.title || "a recipe"
-                      } to Favorites`}{" "}
-                </p>{" "}
-                {timeAgoSave && (
-                  <span className="text-sm text-gray-500">{timeAgoSave}</span>
-                )}{" "}
-              </div>{" "}
-            </li>{" "}
-          </ul>
-        </div>
-        {/* All Recipes Section */}
-        <div className="bg-white p-4 md:p-6 rounded-b-lg shadow-md">
-          <h2 className="text-2xl font-semibold mb-6">All Recipes</h2>{" "}
-          {/* Increased margin */}
-          {/* Conditional Rendering */}
-          {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-              {[...Array(6)].map(
-                (
-                  _,
-                  index // Show 6 skeletons
-                ) => (
-                  <RecipeCardSkeleton key={`all-skel-${index}`} />
-                )
-              )}
+                <h2 className="text-2xl font-bold text-white mb-1">Your Favorites</h2>
+                <p className="text-red-100">Recipes you love most</p>
+              </div>
             </div>
-          ) : !loading && sortedRecipes.length === 0 ? ( // Check sortedRecipes length
-            <div className="text-center py-10">
-              <p className="text-gray-500">No recipes found.</p>
+          </div>
+        </motion.div>
+
+        {/* Recent Activity */}
+        <motion.div
+          className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+        >
+          <div className="flex items-center space-x-2 mb-6">
+            <TrendingUp className="h-6 w-6 text-orange-500" />
+            <h2 className="text-2xl font-bold text-gray-900">Recent Activity</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex items-center space-x-4 p-4 bg-blue-50 rounded-lg">
+              <div className="p-3 bg-blue-100 rounded-full">
+                <Plus className="h-6 w-6 text-blue-600" />
+              </div>
+              <div>
+                <p className="font-medium text-gray-900">
+                  {recipes.length === 0
+                    ? "No recipes created yet"
+                    : `Created "${recipes[recipes.length - 1]?.title || "a recipe"}"`}
+                </p>
+                {timeAgo && <p className="text-sm text-gray-500">{timeAgo}</p>}
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-4 p-4 bg-red-50 rounded-lg">
+              <div className="p-3 bg-red-100 rounded-full">
+                <Heart className="h-6 w-6 text-red-600" />
+              </div>
+              <div>
+                <p className="font-medium text-gray-900">
+                  {favorites.length === 0
+                    ? "No favorites added yet"
+                    : `Added "${favorites[favorites.length - 1]?.title || "a recipe"}" to favorites`}
+                </p>
+                {timeAgoSave && <p className="text-sm text-gray-500">{timeAgoSave}</p>}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* All Recipes Section */}
+        <motion.div
+          className="bg-white rounded-xl shadow-sm border border-gray-100 p-6"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center space-x-2">
+              <Star className="h-6 w-6 text-orange-500" />
+              <h2 className="text-2xl font-bold text-gray-900">All Recipes</h2>
+            </div>
+            <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+              {sortedRecipes.length} recipes
+            </span>
+          </div>
+
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, index) => (
+                <RecipeCardSkeleton key={`skeleton-${index}`} />
+              ))}
+            </div>
+          ) : !loading && sortedRecipes.length === 0 ? (
+            <div className="text-center py-16">
+              <ChefHat className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+              <h3 className="text-xl font-medium text-gray-500 mb-2">No recipes found</h3>
+              <p className="text-gray-400">Start by creating your first recipe!</p>
             </div>
           ) : (
-            // --- MODIFIED: Map over sortedRecipes ---
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {sortedRecipes.map((recipe) => (
                 <RecipeCard
                   key={recipe._id}
                   recipe={recipe}
                   favorites={favorites}
                   user={user}
-                  // Pass down functions needed by RecipeCard
                   fetchUserRecipes={fetchUserRecipes}
                   fetchUserFavRecipes={fetchUserFavRecipes}
                   fetchUserData={fetchUserData}
                 />
               ))}
             </div>
-            // --- End Map ---
           )}
-        </div>
+        </motion.div>
       </div>
     </motion.div>
-  );
+  )
 };
 
 export default HomeScreen;

@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
 import { ForgotPasswordUrl, ResetPasswordWithOtpUrl } from "../../API"; // Adjust path if needed
-
+import { Button } from "../components/core/Button"; // Adjust path if needed
 function ForgotPasswordPopup({ onClose }) {
   const [step, setStep] = useState(1); // 1: Enter Email, 2: Enter OTP & Password
   const [email, setEmail] = useState("");
@@ -138,7 +138,7 @@ function ForgotPasswordPopup({ onClose }) {
             </div>
 
             {/* Send OTP Button */}
-            <button
+            <Button
               type="submit"
               className="w-full bg-[#2418ff] text-white py-2.5 px-4 rounded-lg hover:bg-[#231bcd] transition duration-200 disabled:opacity-60"
               disabled={loading || !email}
@@ -151,7 +151,7 @@ function ForgotPasswordPopup({ onClose }) {
               ) : (
                 "Send OTP"
               )}
-            </button>
+            </Button>
           </form>
         )}
 

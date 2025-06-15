@@ -128,7 +128,7 @@ const DetailScreen = () => {
         <p className="text-slate-500 mb-6">{error}</p>{" "}
         <button
           onClick={handleBackNavigation}
-          className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-200 font-semibold flex items-center"
+          className="mt-4 bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600 transition duration-200 font-semibold flex items-center"
         >
           {" "}
           <ArrowBack sx={{ fontSize: 20, mr: 1 }} /> Go Back{" "}
@@ -145,7 +145,7 @@ const DetailScreen = () => {
         <p className="text-xl text-slate-600 mb-6">Recipe details not found.</p>{" "}
         <button
           onClick={handleBackNavigation}
-          className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-200 font-semibold flex items-center"
+          className="mt-4 bg-orange-500 text-white px-6 py-2 rounded-md hover:bg-orange-600 transition duration-200 font-semibold flex items-center"
         >
           {" "}
           <ArrowBack sx={{ fontSize: 20, mr: 1 }} /> Go Back{" "}
@@ -174,7 +174,7 @@ const DetailScreen = () => {
           {/* Added margin bottom */}
           <button
             onClick={handleBackNavigation}
-            className="flex items-center text-sm text-blue-600 hover:text-blue-800 font-medium transition duration-200 focus:outline-none"
+            className="flex items-center text-sm text-orange-400 hover:text-orange-600 font-medium transition duration-200 focus:outline-none"
           >
             <ArrowBack sx={{ fontSize: 20, mr: 0.5 }} />
             Back
@@ -183,7 +183,7 @@ const DetailScreen = () => {
         {/* --- Recipe Content Area (Single Column, No Card Background) --- */}
         {/* Title and Cuisine - Centered */}
         <div className="mb-8 text-center">
-          <span className="text-blue-500 mb-2 inline-block">
+          <span className="text-orange-500 mb-2 inline-block">
             <RestaurantMenu sx={{ fontSize: 30 }} />
           </span>
           <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-2">
@@ -200,7 +200,7 @@ const DetailScreen = () => {
         {/* Ingredients Section */}
         <div className="mb-8">
           <h2 className="text-2xl font-semibold text-slate-700 mb-4 flex items-center">
-            <ListAlt sx={{ fontSize: 28, mr: 1.5 }} className="text-blue-500" />
+            <ListAlt sx={{ fontSize: 28, mr: 1.5 }} className="text-orange-500" />
             Ingredients
           </h2>
           <ul className="space-y-2 pl-1">
@@ -210,7 +210,7 @@ const DetailScreen = () => {
                   key={index}
                   className="text-base text-slate-700 flex items-center"
                 >
-                  <span className="h-1.5 w-1.5 bg-blue-400 rounded-full mr-3 flex-shrink-0"></span>
+                  <span className="h-1.5 w-1.5 bg-orange-400 rounded-full mr-3 flex-shrink-0"></span>
                   <div>
                     {" "}
                     <span className="font-medium">{item.item}:</span>{" "}
@@ -233,7 +233,7 @@ const DetailScreen = () => {
           <h2 className="text-2xl font-semibold text-slate-700 mb-5 flex items-center">
             <IntegrationInstructionsOutlined
               sx={{ fontSize: 28, mr: 1.5 }}
-              className="text-blue-500"
+              className="text-orange-500"
             />
             Instructions
           </h2>
@@ -244,7 +244,7 @@ const DetailScreen = () => {
                   key={index}
                   className="text-base text-slate-700 leading-relaxed flex"
                 >
-                  <span className="flex items-center justify-center h-6 w-6 bg-blue-500 text-white rounded-full font-bold text-sm mr-4 flex-shrink-0">
+                  <span className="flex items-center justify-center h-6 w-6 bg-orange-500 text-white rounded-full font-bold text-sm mr-4 flex-shrink-0">
                     {" "}
                     {instruction.step ?? index + 1}{" "}
                   </span>
