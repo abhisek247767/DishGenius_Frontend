@@ -55,7 +55,7 @@ const accordionData = [
           href="mailto:honeypatkar70@gmail.com"
           className="text-blue-600 hover:underline block mt-2"
         >
-          honeypatkar70@gmail.com
+          abhisekroy169@gmail.com
         </a>
         {/* Add other support links or info here */}
       </>
@@ -68,7 +68,7 @@ const accordionData = [
     content: (
       <>
         <p className="mb-2">
-          This application was crafted with passion by Honey Pathkar.
+          This application was crafted with passion by Abhisek Roy.
         </p>
         <p className="mb-2">
           Find more projects at:{" "}
@@ -78,31 +78,31 @@ const accordionData = [
             rel="noopener noreferrer"
             className="text-blue-600 hover:underline font-medium"
           >
-            Honey's Portfolio
+            Abhisek's Portfolio
           </a>
           .
         </p>
         <p>
           Follow on GitHub:{" "}
           <a
-            href="https://github.com/honeypathkar"
+            href="https://github.com/abhisek247767"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-600 hover:underline font-medium"
           >
-            @honeypathkar
+            @abhisek247767
           </a>
           .
         </p>
         <p>
-          Follow on Instagram{" "}
+          Connect on LinkdIn{" "}
           <a
-            href="https://instagram.com/honey.jsx"
+            href="https://www.linkedin.com/in/royabhisek247767/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-600 hover:underline font-medium"
           >
-            @honey.jsx
+            @abhisek
           </a>
           .
         </p>
@@ -114,7 +114,7 @@ const accordionData = [
     title: "About App",
     icon: InfoOutlined,
     content:
-      "Recipe Creator AI v1.0. Leveraging the power of AI to inspire your next culinary creation. Built using React, Node.js, Express, MongoDB, and [AI Model Provider].", // Remember to fill in AI Provider if applicable
+      "Recipe Creator AI v1.0. Leveraging the power of AI to inspire your next culinary creation. Built using React, Node.js, Express, MongoDB, and gemini-2.0-flash model.", // Remember to fill in AI Provider if applicable
   },
 ];
 // --- End Accordion Data ---

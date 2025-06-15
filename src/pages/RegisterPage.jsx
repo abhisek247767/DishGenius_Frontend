@@ -6,6 +6,7 @@ import { motion } from "framer-motion"; // Import framer-motion
 import RegisterImage from "../images/register-image.png";
 import axios from "axios";
 import { RegisterUrl } from "../../API";
+import { Button } from "../components/core/Button";
 
 function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -63,7 +64,7 @@ function RegisterPage() {
     <div className="flex flex-wrap min-h-screen">
       {/* Form Section */}
       <motion.div
-        className="flex items-center justify-center w-full lg:w-1/2 lg:bg-[#2418ff] bg-gray-100"
+        className="flex items-center justify-center w-full lg:w-1/2 lg:bg-[#ed8936] bg-gray-100"
         initial={{ x: -300, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.8 }}
@@ -132,7 +133,7 @@ function RegisterPage() {
           </div>
 
           {/* Submit Button */}
-          <button
+          <Button
             type="submit"
             className="w-full bg-[#2418ff] text-white py-2 px-4 rounded-lg hover:bg-[#231bcd] transition duration-200 disabled:opacity-60"
             disabled={
@@ -147,12 +148,12 @@ function RegisterPage() {
             ) : (
               "Create Account"
             )}
-          </button>
+          </Button>
           <div className="flex justify-center mt-5">
             Already have an account?&nbsp;
             <Link
               to="/login"
-              className="text-[#2418ff] hover:underline font-medium"
+              className="text-[#ed8936] hover:underline font-medium"
             >
               Login
             </Link>

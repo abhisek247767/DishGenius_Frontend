@@ -6,7 +6,8 @@ import NoRecipeImage from "../images/no-favorite.png"; // Ensure this path is co
 import axios from "axios";
 import { AddCircleOutline, CloseSharp } from "@mui/icons-material";
 import { RecipeCreateUrl } from "../../API"; // Ensure this path is correct
-
+import { Button } from "./core/Button";
+import { Input } from "./core/input";
 const RecipeForm = ({
   fetchUserData,
   fetchUserRecipes,
@@ -117,7 +118,7 @@ const RecipeForm = ({
               >
                 Dish Name or Ingredients
               </label>
-              <input
+              <Input
                 type="text"
                 id="ingredients"
                 placeholder="Enter item and press Enter or Add"
@@ -171,7 +172,7 @@ const RecipeForm = ({
               >
                 Servings (Optional)
               </label>
-              <input
+              <Input
                 type="number"
                 id="members"
                 placeholder="e.g., 4"
@@ -231,8 +232,9 @@ const RecipeForm = ({
           </div>
 
           {/* Submit Button */}
-          <button
+          <Button
             type="submit"
+            variant="primary"
             className={`w-full text-white py-3 px-6 rounded-lg font-semibold transition duration-300 ease-in-out flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${
               loading
                 ? "bg-gray-400 cursor-not-allowed"
@@ -267,7 +269,7 @@ const RecipeForm = ({
             ) : (
               "Generate Recipe"
             )}
-          </button>
+          </Button>
         </form>
         {/* Optional separate loading indicator if needed outside the button */}
         {/* {loading && ( ... )} */}
