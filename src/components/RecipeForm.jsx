@@ -7,7 +7,7 @@ import axios from "axios";
 import { AddCircleOutline, CloseSharp } from "@mui/icons-material";
 import { RecipeCreateUrl } from "../../API"; // Ensure this path is correct
 import { Button } from "./core/Button";
-import { Input } from "./core/input";
+import { Input } from "./core/Input";
 const RecipeForm = ({
   fetchUserData,
   fetchUserRecipes,
