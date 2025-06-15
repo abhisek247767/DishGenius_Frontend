@@ -11,7 +11,6 @@ import axios from "axios";
 import OtpPopup from "./OtpVerification"; // Adjust path if needed
 import ForgotPasswordPopup from "./ForgotPasswordPopup"; // Adjust path if needed
 import { Button } from "../components/core/Button";
-import { Input } from "../components/core/input"; // Adjust path if needed
 function LoginPage({ setUser }) {
   const [formData, setFormData] = useState({
     email: "",
@@ -172,7 +171,7 @@ function LoginPage({ setUser }) {
             >
               Email
             </label>
-            <Input
+            <input
               type="email"
               id="email"
               name="email"
