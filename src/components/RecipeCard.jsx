@@ -1,4 +1,4 @@
-import {React,useState} from "react";
+import {React,useState,useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { CiHeart } from "react-icons/ci";
 import { FaRegTrashAlt, FaHeart, FaShare, FaArrowRight } from "react-icons/fa"; // Ensure FaArrowRight is imported
@@ -41,6 +41,9 @@ const RecipeCard = ({
   const handleViewDetails = () => {
     navigate(`/recipe/${_id}`);
   };
+// useEffect(() => {
+//   throw new Error("Test crash in HomeScreen");
+// }, []);
 
   const handleFavoriteClick = async () => {
     // Determine URL and success message based on current favorite status
